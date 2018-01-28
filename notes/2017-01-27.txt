@@ -1,0 +1,11 @@
+"Unfortunately, we do not have any slaves in the world anymore, otherwise the world would be perfect."
+
+The |- symbol means orthogonal
+
+Closed-loop control systems are usually complex, but very well defined
+
+Orthogonal, perpendicular, and normal are practically the same
+
+This class will use the electron flow convention for circuits
+
+
