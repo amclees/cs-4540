@@ -1,0 +1,16 @@
+function rmat = rotx(theta)
+  rmat = [1 0 0; 0 cos(theta) -sin(theta); 0 sin(theta) cos(theta)]
+endfunction
+
+function rmat = roty(theta)
+  rmat = [cos(theta) 0 -sin(theta); 0 1 0; sin(theta) 0 cos(theta)]
+endfunction
+
+function rmat = rotz(theta)
+  rmat = [cos(theta) -sin(theta) 0; sin(theta) cos(theta) 0; 0 0 1]
+endfunction
+
+function rmat = rotxyz(theta)
+  rmat = rotx(theta) * roty(theta) * rotz(theta)
+endfunction
+
