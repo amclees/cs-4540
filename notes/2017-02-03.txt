@@ -1,0 +1,7 @@
+"Here we have all the trigonometry that we are ever going to need"
+
+Projection is getting the part of a vector in x or y
+
+Octave matrices are 1-indexed
+
+
