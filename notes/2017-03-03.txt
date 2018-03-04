@@ -1,0 +1,5 @@
+There is an important difference between rotating the axis and the body
+
+We will cover quaternions later on, matrices are for simplicity of explanation
+
+
