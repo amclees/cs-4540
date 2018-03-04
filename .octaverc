@@ -1,16 +1,47 @@
-function rmat = rotx(theta)
-  rmat = [1 0 0; 0 cos(theta) -sin(theta); 0 sin(theta) cos(theta)]
+function [rmat] = rotz(theta)
+  rmat = [1 0 0;
+          0 cos(theta) -sin(theta);
+          0 sin(theta) cos(theta)]
 endfunction
 
-function rmat = roty(theta)
-  rmat = [cos(theta) 0 -sin(theta); 0 1 0; sin(theta) 0 cos(theta)]
+function [rmat] = roty(theta)
+  rmat = [cos(theta) 0 -sin(theta);
+          0 1 0;
+          sin(theta) 0 cos(theta)]
 endfunction
 
-function rmat = rotz(theta)
-  rmat = [cos(theta) -sin(theta) 0; sin(theta) cos(theta) 0; 0 0 1]
+function [rmat] = rotx(theta)
+  rmat = [cos(theta) -sin(theta) 0;
+          sin(theta) cos(theta) 0;
+          0 0 1]
 endfunction
 
-function rmat = rotxyz(theta)
-  rmat = rotx(theta) * roty(theta) * rotz(theta)
+# Equivalent names
+# alpha beta gamma
+# x     y    z
+# pitch yaw  roll
+function [rmat] = rotxyz(alpha, beta, gamma)
+  rmat = rotx(alpha) * roty(beta) * rotz(gamma)
+endfunction
+
+# dist2 is for distance between 2 2-element row or column vectors
+function [distance] = dist2(v1, v2)
+  distance = sqrt((v1(1) - v2(1))^2 + (v1(2) - v2(2))^2)
+endfunction
+
+# dist3 is for distance between 2 3-element row or column vectors
+function [distance] = dist3(v1, v2)
+  distance = sqrt((v1(1) - v2(1))^2 + (v1(2) - v2(2))^2 + (v1(3) - v2(3))^2)
+endfunction
+
+# r is the rotation matrix, abbreviated for readability
+function [A] = ang(r)
+  # Yaw
+  beta = atan2(-r(3, 1), sqrt(r(1, 1)^2 + r(2, 1)^2))
+  # Pitch
+  alpha = atan2(r(2, 1) / cos(beta), r(1, 1) / cos(beta))
+  # Roll
+  gamma = atan2(r(3, 2) / cos(beta), r(3, 3) / cos(beta))
+  A = [alpha; beta; gamma]
 endfunction
 
