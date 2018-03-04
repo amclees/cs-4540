@@ -1,4 +1,24 @@
-function [rmat] = rotz(theta)
+# Copyright (c) 2018 Andrew McLees
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+function [rmat] = rotx(theta)
   rmat = [1 0 0;
           0 cos(theta) -sin(theta);
           0 sin(theta) cos(theta)]
@@ -10,7 +30,7 @@ function [rmat] = roty(theta)
           sin(theta) 0 cos(theta)]
 endfunction
 
-function [rmat] = rotx(theta)
+function [rmat] = rotz(theta)
   rmat = [cos(theta) -sin(theta) 0;
           sin(theta) cos(theta) 0;
           0 0 1]
@@ -18,10 +38,10 @@ endfunction
 
 # Equivalent names
 # alpha beta gamma
-# x     y    z
+# z     y    x
 # pitch yaw  roll
-function [rmat] = rotxyz(alpha, beta, gamma)
-  rmat = rotx(alpha) * roty(beta) * rotz(gamma)
+function [rmat] = rotzyx(alpha, beta, gamma)
+  rmat = rotz(alpha) * roty(beta) * rotx(gamma)
 endfunction
 
 # dist2 is for distance between 2 2-element row or column vectors
@@ -36,11 +56,8 @@ endfunction
 
 # r is the rotation matrix, abbreviated for readability
 function [A] = ang(r)
-  # Yaw
   beta = atan2(-r(3, 1), sqrt(r(1, 1)^2 + r(2, 1)^2))
-  # Pitch
   alpha = atan2(r(2, 1) / cos(beta), r(1, 1) / cos(beta))
-  # Roll
   gamma = atan2(r(3, 2) / cos(beta), r(3, 3) / cos(beta))
   A = [alpha; beta; gamma]
 endfunction
