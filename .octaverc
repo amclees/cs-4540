@@ -36,6 +36,18 @@ function [rmat] = rotz(theta)
           0 0 1]
 endfunction
 
+function [rmat] = rotxd(theta)
+  rmat = rotx(deg2rad(theta))
+endfunction
+
+function [rmat] = rotyd(theta)
+  rmat = roty(deg2rad(theta))
+endfunction
+
+function [rmat] = rotzd(theta)
+  rmat = rotz(deg2rad(theta))
+endfunction
+
 # Equivalent names
 # alpha beta gamma
 # z     y    x
@@ -43,6 +55,11 @@ endfunction
 function [rmat] = rotzyx(alpha, beta, gamma)
   rmat = rotz(alpha) * roty(beta) * rotx(gamma)
 endfunction
+
+function [rmat] = rotzyxd(alpha, beta, gamma)
+  rmat = rotzd(alpha) * rotyd(beta) * rotxd(gamma)
+endfunction
+
 
 # dist2 is for distance between 2 2-element row or column vectors
 function [distance] = dist2(v1, v2)
