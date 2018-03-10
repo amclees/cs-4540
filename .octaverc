@@ -48,6 +48,27 @@ function [rmat] = rotzd(theta)
   rmat = rotz(deg2rad(theta))
 endfunction
 
+# Axis rotations
+
+function [rmat] = rotxaxis(theta)
+  rmat = [1 0 0;
+          0 cos(theta) sin(theta);
+          0 -sin(theta) cos(theta)]
+endfunction
+
+function [rmat] = rotyaxis(theta)
+  rmat = [cos(theta) 0 sin(theta);
+          0 1 0;
+          -sin(theta) 0 cos(theta)]
+endfunction
+
+function [rmat] = rotzaxis(theta)
+  rmat = [cos(theta) sin(theta) 0;
+          -sin(theta) cos(theta) 0;
+          0 0 1]
+endfunction
+
+
 # Equivalent names
 # alpha beta gamma
 # z     y    x
