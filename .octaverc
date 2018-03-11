@@ -25,9 +25,9 @@ function [rmat] = rotx(theta)
 endfunction
 
 function [rmat] = roty(theta)
-  rmat = [cos(theta) 0 -sin(theta);
+  rmat = [cos(theta) 0 sin(theta);
           0 1 0;
-          sin(theta) 0 cos(theta)]
+          -sin(theta) 0 cos(theta)]
 endfunction
 
 function [rmat] = rotz(theta)
@@ -57,9 +57,9 @@ function [rmat] = rotxaxis(theta)
 endfunction
 
 function [rmat] = rotyaxis(theta)
-  rmat = [cos(theta) 0 sin(theta);
+  rmat = [cos(theta) 0 -sin(theta);
           0 1 0;
-          -sin(theta) 0 cos(theta)]
+          sin(theta) 0 cos(theta)]
 endfunction
 
 function [rmat] = rotzaxis(theta)
