@@ -1,0 +1,12 @@
+Problem 5 on the midterm had a rotation matrix for imaginary angles, so the answer was none of the above
+
+There will likely be another midterm after spring break
+
+e^ix = cos(x) + i * sin(x), where i^2 = -1
+Derived from this, e^(pi * i) = -1
+
+Euler angle rotations
+  Z-axis global - precession
+  X-axis local - nutation
+  Z-axis local - spin
+
