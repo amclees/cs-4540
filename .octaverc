@@ -100,3 +100,30 @@ function [A] = ang(r)
   A = [alpha; beta; gamma]
 endfunction
 
+# Construct a euler matrix
+# precession - phi
+# nutation - theta
+# spin - psi
+function [rmat] = eulermat(precession, nutation, spin)
+  rmat = rotz(-spin) * rotx(nutation) * rotz(-precession)
+endfunction
+
+# Construct a euler matrix from angles in degrees
+function [rmat] = eulermatd(precession, nutation, spin)
+  rmat = rotzd(-spin) * rotxd(nutation) * rotzd(-precession)
+endfunction
+
+# Extract euler angles from a rotation matrix
+function [A] = eulerang(r)
+  precession = -atan(r(3, 1) / r(3, 2))
+  nutation = acos(r(3, 3))
+  spin = atan(r(1, 3) / r(2, 3))
+  A = [precession ; nutation ; spin]
+endfunction
+
+# Extract euler angles from a rotation matrix in degrees
+function [A] = eulerangd(r)
+  radian = eulerang(r)
+  A = [rad2deg(radian(1)) ; rad2deg(radian(2)) ; rad2deg(radian(3))]
+endfunction
+
