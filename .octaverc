@@ -81,6 +81,21 @@ function [rmat] = rotzyxd(alpha, beta, gamma)
   rmat = rotzd(alpha) * rotyd(beta) * rotxd(gamma)
 endfunction
 
+function [magnitude] = mag(v)
+  total = 0
+  for i = v
+    total += i^2
+  endfor
+  magnitude = sqrt(total)
+endfunction
+
+function [distance] = dist(v1, v2)
+  dist = 0
+  for i = 1:length(v1)
+    dist += (v1(i) - v2(i))^2
+  endfor
+  distance = sqrt(dist)
+endfunction
 
 # dist2 is for distance between 2 2-element row or column vectors
 function [distance] = dist2(v1, v2)
