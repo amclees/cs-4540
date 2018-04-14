@@ -68,6 +68,17 @@ function [rmat] = rotzaxis(theta)
           0 0 1];
 endfunction
 
+function [rmat] = rotxaxisd(theta)
+  rmat = rotxaxis(deg2rad(theta))
+endfunction
+
+function [rmat] = rotyaxisd(theta)
+  rmat = rotyaxis(deg2rad(theta))
+endfunction
+
+function [rmat] = rotzaxisd(theta)
+  rmat = rotzaxis(deg2rad(theta))
+endfunction
 
 # Equivalent names
 # alpha beta gamma
@@ -124,12 +135,12 @@ endfunction
 # nutation - theta
 # spin - psi
 function [rmat] = eulermat(precession, nutation, spin)
-  rmat = rotz(-spin) * rotx(nutation) * rotz(-precession);
+  rmat = rotz(spin) * rotxaxis(nutation) * rotzaxis(precession);
 endfunction
 
 # Construct a euler matrix from angles in degrees
 function [rmat] = eulermatd(precession, nutation, spin)
-  rmat = rotzd(-spin) * rotxd(nutation) * rotzd(-precession);
+  rmat = eulermat(deg2rad(precession), deg2rad(nutation), deg2rad(spin));
 endfunction
 
 # Extract euler angles from a rotation matrix
