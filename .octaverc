@@ -109,10 +109,14 @@ endfunction
 
 # r is the rotation matrix, abbreviated for readability
 function [A] = ang(r)
-  beta = atan2(-r(3, 1), sqrt(r(1, 1)^2 + r(2, 1)^2))
-  alpha = atan2(r(2, 1) / cos(beta), r(1, 1) / cos(beta))
-  gamma = atan2(r(3, 2) / cos(beta), r(3, 3) / cos(beta))
-  A = [alpha; beta; gamma]
+  beta = atan2(-r(3, 1), sqrt(r(1, 1)^2 + r(2, 1)^2));
+  alpha = atan2(r(2, 1) / cos(beta), r(1, 1) / cos(beta));
+  gamma = atan2(r(3, 2) / cos(beta), r(3, 3) / cos(beta));
+  A = [gamma ; beta ; alpha];
+endfunction
+
+function [A] = angd(r)
+  A = rad2deg(ang(r));
 endfunction
 
 # Construct a euler matrix
