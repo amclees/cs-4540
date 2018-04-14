@@ -157,3 +157,14 @@ function [A] = eulerangd(r)
   A = [rad2deg(radian(1)) ; rad2deg(radian(2)) ; rad2deg(radian(3))];
 endfunction
 
+function [v] = skewv(u)
+  v = [0 -u(3) u(2) ; u(3) 0 -u(1) ; -u(2) u(1) 0];
+endfunction
+
+function [R] = rotr(u, phi)
+  a = eye(3) * cos(phi);
+  b = (u * u') * (1 - cos(phi));
+  c = skewv(u) * sin(phi);
+  R = a + b + c;
+endfunction
+
