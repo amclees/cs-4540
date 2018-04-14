@@ -60,6 +60,7 @@ function [rmat] = rotzyxd(alpha, beta, gamma)
   rmat = rotzd(alpha) * rotyd(beta) * rotxd(gamma);
 endfunction
 
+# Magnitude for horizontal vectors
 function [magnitude] = mag(v)
   total = 0;
   for i = v
@@ -68,6 +69,7 @@ function [magnitude] = mag(v)
   magnitude = sqrt(total);
 endfunction
 
+# Distance between vectors
 function [distance] = dist(v1, v2)
   dist = 0;
   for i = 1:length(v1)
@@ -125,10 +127,12 @@ function [A] = eulerangd(r)
   A = [rad2deg(radian(1)) ; rad2deg(radian(2)) ; rad2deg(radian(3))];
 endfunction
 
+# Calculate the v matrix in the Rodriguez formula
 function [v] = skewv(u)
   v = [0 -u(3) u(2) ; u(3) 0 -u(1) ; -u(2) u(1) 0];
 endfunction
 
+# Construct a Rodriguez formula rotation matrix
 function [R] = rotr(u, phi)
   a = eye(3) * cos(phi);
   b = (u * u') * (1 - cos(phi));
@@ -136,18 +140,22 @@ function [R] = rotr(u, phi)
   R = a + b + c;
 endfunction
 
+# Construct a Rodriguez formula rotation matrix in degrees
 function [R] = rotrd(u, phi)
   R = rotr(u, deg2rad(phi));
 endfunction
 
+# Extract angle from Rodriguez formula rotation matrix
 function [phi] = angr(R)
   phi = acos((trace(R) - 1) / 2);
 endfunction
 
+# Extract angle from Rodriguez formula rotation matrix in degrees
 function [phi] = angrd(R)
   phi = rad2deg(angr(R));
 endfunction
 
+# Extract vector from Rodriguez formula rotation matrix
 function [u] = extractu(R)
   v = (R' - R) / (2 * sin(angr(R)))
   u = [v(3, 2) v(1, 3) v(2, 1)]'
