@@ -168,3 +168,7 @@ function [R] = rotr(u, phi)
   R = a + b + c;
 endfunction
 
+function [R] = rotrd(u, phi)
+  R = rotr(u, deg2rad(phi));
+endfunction
+
