@@ -48,38 +48,6 @@ function [rmat] = rotzd(theta)
   rmat = rotz(deg2rad(theta));
 endfunction
 
-# Axis rotations
-
-function [rmat] = rotxaxis(theta)
-  rmat = [1 0 0;
-          0 cos(theta) sin(theta);
-          0 -sin(theta) cos(theta)];
-endfunction
-
-function [rmat] = rotyaxis(theta)
-  rmat = [cos(theta) 0 -sin(theta);
-          0 1 0;
-          sin(theta) 0 cos(theta)];
-endfunction
-
-function [rmat] = rotzaxis(theta)
-  rmat = [cos(theta) sin(theta) 0;
-          -sin(theta) cos(theta) 0;
-          0 0 1];
-endfunction
-
-function [rmat] = rotxaxisd(theta)
-  rmat = rotxaxis(deg2rad(theta))
-endfunction
-
-function [rmat] = rotyaxisd(theta)
-  rmat = rotyaxis(deg2rad(theta))
-endfunction
-
-function [rmat] = rotzaxisd(theta)
-  rmat = rotzaxis(deg2rad(theta))
-endfunction
-
 # Equivalent names
 # alpha beta gamma
 # z     y    x
@@ -135,7 +103,7 @@ endfunction
 # nutation - theta
 # spin - psi
 function [rmat] = eulermat(precession, nutation, spin)
-  rmat = rotz(spin) * rotxaxis(nutation) * rotzaxis(precession);
+  rmat = rotz(spin)' * rotx(nutation)' * rotz(precession)';
 endfunction
 
 # Construct a euler matrix from angles in degrees
@@ -170,5 +138,18 @@ endfunction
 
 function [R] = rotrd(u, phi)
   R = rotr(u, deg2rad(phi));
+endfunction
+
+function [phi] = angr(R)
+  phi = acos((trace(R) - 1) / 2);
+endfunction
+
+function [phi] = angrd(R)
+  phi = rad2deg(angr(R));
+endfunction
+
+function [u] = extractu(R)
+  v = (R' - R) / (2 * sin(angr(R)))
+  u = [v(3, 2) v(1, 3) v(2, 1)]'
 endfunction
 
