@@ -51,12 +51,37 @@ class Quaternion
     x * other.x + y * other.y + z * other.z
   end
 
+  def inverse
+    return nil unless unit?
+    conjugate * (1.0 / magnitude_squared)
+  end
+
+  def magnitude
+    Math.sqrt(magnitude_squared)
+  end
+
+  def magnitude_squared
+    w * w + x * x + y * y + z * z
+  end
+
+  def negative
+    Quaternion.new(-w, -x, -y, -z)
+  end
+
+  def unit?
+    (magnitude - 1).abs <= 0.001
+  end
+
   def vector
     Quaternion.new 0, x, y, z
   end
 
   def inspect
     "[w = #{w}, x = #{x}, y = #{y}, z = #{z}]"
+  end
+
+  def self.one
+    Quaternion.new 1, 0, 0, 0
   end
 
   def self.random(range)
@@ -66,5 +91,9 @@ class Quaternion
       rand(range),
       rand(range)
     )
+  end
+
+  def self.zero
+    Quaternion.new 0, 0, 0, 0
   end
 end
