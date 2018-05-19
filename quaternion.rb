@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'matrix'
+
 # A quaternion
 class Quaternion
   attr_accessor :w, :x, :y, :z
@@ -43,6 +45,30 @@ class Quaternion
     w == other.w && x == other.x && y == other.y && z == other.z
   end
 
+  def angle(delta: 0.001, step: Math::PI / 36_000.0)
+    raise 'Non-unit quaternions have no angles' unless unit?
+    current = -Math::PI
+    max = Math::PI
+
+    while current < max
+      cos = Math.cos(current)
+      sin = Math.sin(current)
+      cos_pass = (cos * cos - w * w).abs <= delta
+      sin_pass = (sin * sin - vector.magnitude_squared).abs <= delta
+      if cos_pass && sin_pass
+        positive_angle = current.negative? ? Math::PI + current : current
+        return positive_angle
+      end
+      current += step
+    end
+
+    nil
+  end
+
+  def column_vector
+    Matrix.column_vector [w, x, y, z]
+  end
+
   def conjugate
     Quaternion.new(w, -x, -y, -z)
   end
@@ -64,8 +90,31 @@ class Quaternion
     w * w + x * x + y * y + z * z
   end
 
+  def matrix
+    Matrix[
+      [w, -x, -y, -z],
+      [x, w, -z, y],
+      [y, z, w, -x],
+      [z, -y, x, w]
+    ]
+  end
+
   def negative
     Quaternion.new(-w, -x, -y, -z)
+  end
+
+  def pure?
+    w.abs <= 0.001
+  end
+
+  def rotate(other)
+    raise 'Rotation quaternion must be a unit quaternion' unless unit?
+    raise 'Quaternion to rotate must be pure' unless other.pure?
+    self * other * conjugate
+  end
+
+  def unit
+    self * (1.0 / magnitude)
   end
 
   def unit?
@@ -78,6 +127,10 @@ class Quaternion
 
   def inspect
     "[w = #{w}, x = #{x}, y = #{y}, z = #{z}]"
+  end
+
+  def self.angle_axis(angle, axis)
+    axis * Math.sin(angle) + Math.cos(angle)
   end
 
   def self.one
@@ -96,4 +149,7 @@ class Quaternion
   def self.zero
     Quaternion.new 0, 0, 0, 0
   end
+
+  alias normalize unit
+  singleton_class.send(:alias_method, :unit, :one)
 end
