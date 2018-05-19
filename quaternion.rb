@@ -43,6 +43,10 @@ class Quaternion
     w == other.w && x == other.x && y == other.y && z == other.z
   end
 
+  def conjugate
+    Quaternion.new(w, -x, -y, -z)
+  end
+
   def dot_product(other)
     x * other.x + y * other.y + z * other.z
   end
