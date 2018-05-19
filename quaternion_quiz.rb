@@ -31,7 +31,7 @@ max = count.to_f
     puts 'Correct!'
     score += 1.0
   else
-    puts "Wrong. The correct answer was #{answer}"
+    puts "Wrong. The correct answer was #{answer.inspect}"
   end
 end
 
